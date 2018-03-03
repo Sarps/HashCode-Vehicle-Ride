@@ -1,7 +1,8 @@
 import numpy as np
 import random
 
-filename = 'd_metropolis'
+filenames = ('a_example', 'b_should_be_easy', 'c_no_hurry', 'd_metropolis', 'e_high_bonus')
+filename = filenames[4]
 initial_score = 2258322
 
 
@@ -22,16 +23,20 @@ def load_file(fname):
 def score(result):
     global f, tm, b
     total_score = 0
-    current_step = 0
     for i in range(f):
-        for j in range(1,len(result[i])):
+        current_step = 0
+        for j in result[i]:
             ride = tm[j]
             dist = distance(ride)
+            print(j,ride,dist)
             if(current_step <= ride[4]):
-                current_step = ride[4]
                 total_score += b
+                #print('bonus',b)
+                current_step = ride[4]
             if(dist+current_step < ride[5]):
                 total_score += dist
+                #print('pay',dist)
+            current_step += dist
     return total_score
 
 
